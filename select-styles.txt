@@ -1,0 +1,20 @@
+﻿.month-select, .year-select {
+    border: 1px solid #999;
+    background-color: white;
+    padding: 4px 8px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 3px;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+}
+
+.month-select:hover, .year-select:hover {
+    background-color: #f0f0f0;
+}
+
+.month-select:focus, .year-select:focus {
+    outline: 2px solid #5a9a5a;
+    outline-offset: 1px;
+}

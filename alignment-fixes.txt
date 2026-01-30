@@ -1,0 +1,31 @@
+﻿.habit-item {
+    padding: 0 12px;
+    height: 33px;
+}
+
+.grid-cell {
+    height: 33px;
+}
+
+.habit-grid {
+    grid-auto-rows: 33px;
+}
+
+.progress-row {
+    padding: 0 10px;
+    height: 33px;
+}
+
+.bar-chart-container {
+    height: 100px;
+    padding: 5px 0;
+}
+
+.bar-column {
+    padding: 0 1px;
+}
+
+.bar {
+    min-height: 0;
+    border-radius: 2px 2px 0 0;
+}

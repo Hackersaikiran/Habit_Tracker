@@ -1,0 +1,101 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Habit Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <h1>HABIT</h1>
+                <p class="logo-script">Tracker</p>
+            </div>
+            <div class="daily-progress">
+                DAILY<br>PROGRESS
+            </div>
+        </header>
+
+        <div class="main-content">
+            <!-- Sidebar with Daily Habits -->
+            <aside class="sidebar">
+                <div class="sidebar-header">DAILY HABITS</div>
+                <div class="sidebar-subheader">HABITS</div>
+                <div class="sidebar-spacer weekday-spacer"></div>
+                <div class="sidebar-spacer date-spacer"></div>
+                <div class="habits-list">
+                    <div class="habit-item"><span class="habit-number">1</span> Wake up at 6AM </div>
+                    <div class="habit-item"><span class="habit-number">2</span> Drink Water(500ml) </div>
+                    <div class="habit-item"><span class="habit-number">3</span> Shopping (once 500) </div>
+                    <div class="habit-item"><span class="habit-number">4</span> Hanging 2min </div>
+                    <div class="habit-item"><span class="habit-number">5</span> Cold shower </div>
+                    <div class="habit-item"><span class="habit-number">6</span> Have Breakfast </div>
+                    <div class="habit-item"><span class="habit-number">7</span> Coding (3hrs) </div>
+                    <div class="habit-item"><span class="habit-number">8</span> Prayer (2hrs) </div>
+                    <div class="habit-item"><span class="habit-number">9</span> Have Lunch </div>
+                    <div class="habit-item"><span class="habit-number">10</span> Skipping rope (500) </div>
+                    <div class="habit-item"><span class="habit-number">11</span> Pushups / Situps (20) </div>
+                    <div class="habit-item"><span class="habit-number">12</span> Screen Time <90mins </div>
+                    <div class="habit-item"><span class="habit-number">13</span> Eat fruits and vegetables daily </div>
+                    <div class="habit-item"><span class="habit-number">14</span> Screen time before bed <10min </div>
+                    <div class="habit-item"><span class="habit-number">15</span> Tidy up your space for 5-10 minutes </div>
+                    <div class="habit-item"><span class="habit-number">16</span> Drinking water (3L) </div>
+                </div>
+            </aside>
+
+            <!-- Calendar Grid -->
+            <main class="calendar">
+                <div class="calendar-header" id="calendarHeader"></div>
+                <div class="weeks-container" id="weeksContainer"></div>
+            </main>
+
+            <!-- Progress Panel -->
+            <aside class="progress-panel">
+                <div class="month-year">
+                    <div class="month-box">
+                        <div class="label">MONTH</div>
+                        <select class="value month-select" id="monthSelect">
+                            <option value="0">January</option>
+                            <option value="1">February</option>
+                            <option value="2">March</option>
+                            <option value="3">April</option>
+                            <option value="4">May</option>
+                            <option value="5">June</option>
+                            <option value="6">July</option>
+                            <option value="7">August</option>
+                            <option value="8">September</option>
+                            <option value="9">October</option>
+                            <option value="10">November</option>
+                            <option value="11">December</option>
+                        </select>
+                    </div>
+                    <div class="year-box">
+                        <div class="label">YEAR</div>
+                        <select class="value year-select" id="yearSelect">
+                            <option value="2024">2024</option>
+                            <option value="2025">2025</option>
+                            <option value="2026" selected>2026</option>
+                            <option value="2027">2027</option>
+                            <option value="2028">2028</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="progress-header">PROGRESS</div>
+                <div class="progress-table" id="progressTable">
+                    <div class="progress-table-header">
+                        <div class="col-goal">GOAL</div>
+                        <div class="col-percentage">PERCENTAGE</div>
+                        <div class="col-count">COUNT</div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,465 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1600px;
+    margin: 0 auto;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 30px;
+    border-bottom: 2px solid #333;
+}
+
+.logo {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.logo h1 {
+    font-size: 48px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    margin: 0;
+    line-height: 1;
+}
+
+.logo-script {
+    font-family: 'Brush Script MT', cursive;
+    font-size: 36px;
+    margin-top: -10px;
+    font-style: italic;
+}
+
+.daily-progress {
+    text-align: right;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 1.2;
+    letter-spacing: 1px;
+}
+
+/* Main Content */
+.main-content {
+    display: flex;
+    gap: 0;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 260px;
+    border-right: 2px solid #ddd;
+    flex-shrink: 0;
+}
+
+.sidebar-header {
+    background-color: #c8c8c8;
+    padding: 12px;
+    font-weight: bold;
+    text-align: center;
+    border-bottom: 1px solid #999;
+}
+
+.habits-list {
+    background-color: #e8e8e8;
+}
+
+.habit-item {
+    padding: 10px 12px;
+    border-bottom: 1px solid #ccc;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 32px;
+    box-sizing: border-box;
+}
+
+.habit-number {
+    display: inline-block;
+    width: 20px;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* Calendar */
+.calendar {
+    flex: 1;
+    overflow-x: auto;
+}
+
+.calendar-header {
+    background-color: #f5f5f5;
+    border-bottom: 2px solid #999;
+}
+
+/* Bar Chart */
+.bar-chart-container {
+    display: grid;
+    grid-template-columns: repeat(31, 1fr);
+    height: 120px;
+    padding: 10px 0 5px 0;
+    background-color: #fafafa;
+    border-bottom: 1px solid #ddd;
+    align-items: flex-end;
+    gap: 0;
+}
+
+.bar-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    height: 100%;
+    padding: 0 2px;
+}
+
+.bar {
+    width: 100%;
+    background-color: #5a9a5a;
+    min-height: 2px;
+    transition: height 0.3s ease;
+}
+
+.day-numbers {
+    display: grid;
+    grid-template-columns: repeat(31, 1fr);
+    border-bottom: 1px solid #999;
+}
+
+.day-cell {
+    text-align: center;
+    padding: 8px 2px;
+    font-size: 12px;
+    font-weight: bold;
+    border-right: 1px solid #ddd;
+}
+
+.percentages {
+    display: grid;
+    grid-template-columns: repeat(31, 1fr);
+}
+
+.percent-cell {
+    text-align: center;
+    padding: 6px 2px;
+    font-size: 11px;
+    font-weight: bold;
+    border-right: 1px solid #ddd;
+}
+
+/* Weeks */
+.weeks-container {
+    display: flex;
+}
+
+.week-section {
+    flex: 1;
+    border-right: 2px solid #999;
+}
+
+.week-section:last-child {
+    border-right: none;
+}
+
+.week-label {
+    background-color: #d0d0d0;
+    text-align: center;
+    padding: 8px;
+    font-weight: bold;
+    font-size: 13px;
+    border-bottom: 1px solid #999;
+}
+
+.week-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    background-color: #e8e8e8;
+    border-bottom: 1px solid #999;
+}
+
+.weekday {
+    text-align: center;
+    padding: 6px 2px;
+    font-size: 11px;
+    font-weight: bold;
+    border-right: 1px solid #ccc;
+}
+
+.weekday:last-child {
+    border-right: none;
+}
+
+.week-date-nums {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    background-color: #f0f0f0;
+    border-bottom: 1px solid #999;
+}
+
+.date-num {
+    text-align: center;
+    padding: 6px 2px;
+    font-size: 11px;
+    font-weight: bold;
+    font-style: italic;
+    border-right: 1px solid #ccc;
+}
+
+.date-num:last-child {
+    border-right: none;
+}
+
+/* Habit Grid */
+.habit-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-auto-rows: minmax(32px, auto);
+}
+
+.grid-cell {
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    min-height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+    position: relative;
+    cursor: pointer;
+}
+
+.grid-cell:nth-child(7n) {
+    border-right: none;
+}
+
+.grid-cell.completed {
+    background: repeating-linear-gradient(
+        45deg,
+        #5a9a5a,
+        #5a9a5a 3px,
+        #4a8a4a 3px,
+        #4a8a4a 6px
+    );
+    color: transparent;
+}
+
+.grid-cell.missed {
+    background-color: white;
+    color: #333;
+}
+
+.grid-cell.future {
+    background-color: #fafafa;
+    cursor: not-allowed;
+}
+
+/* Progress Panel */
+.progress-panel {
+    width: 340px;
+    border-left: 2px solid #999;
+    flex-shrink: 0;
+}
+
+.month-year {
+    display: flex;
+    border-bottom: 2px solid #999;
+}
+
+.month-box,
+.year-box {
+    flex: 1;
+    padding: 15px;
+    text-align: center;
+}
+
+.month-box {
+    border-right: 1px solid #999;
+}
+
+.month-box .label,
+.year-box .label {
+    font-size: 11px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #666;
+}
+
+.month-box .value,
+.year-box .value {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.progress-header {
+    background-color: #d0d0d0;
+    padding: 12px;
+    text-align: center;
+    font-weight: bold;
+    border-bottom: 1px solid #999;
+}
+
+.progress-table {
+    background-color: #f5f5f5;
+}
+
+.progress-table-header {
+    display: grid;
+    grid-template-columns: 50px 1fr 80px;
+    background-color: #e0e0e0;
+    border-bottom: 2px solid #999;
+    font-size: 11px;
+    font-weight: bold;
+    padding: 8px 10px;
+}
+
+.col-goal,
+.col-percentage,
+.col-count {
+    display: flex;
+    align-items: center;
+}
+
+.col-percentage {
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.progress-row {
+    display: grid;
+    grid-template-columns: 50px 1fr 80px;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    gap: 10px;
+    align-items: center;
+}
+
+.col-goal {
+    justify-content: center;
+    font-weight: bold;
+}
+
+.col-count {
+    justify-content: center;
+    font-size: 13px;
+}
+
+.percent-text {
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 4px;
+}
+
+.progress-bar {
+    height: 16px;
+    background-color: #ddd;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background-color: #6fb56f;
+    transition: width 0.3s ease;
+}
+
+/* Responsive Design */
+@media (max-width: 1400px) {
+    .main-content {
+        flex-direction: column;
+    }
+
+    .sidebar,
+    .progress-panel {
+        width: 100%;
+        border: none;
+        border-bottom: 2px solid #999;
+    }
+
+    .calendar {
+        overflow-x: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    .header {
+        padding: 15px;
+    }
+
+    .logo h1 {
+        font-size: 32px;
+    }
+
+    .logo-script {
+        font-size: 24px;
+    }
+
+    .daily-progress {
+        font-size: 11px;
+    }
+
+    .sidebar {
+        width: 100%;
+    }
+
+    .weeks-container {
+        flex-direction: column;
+    }
+
+    .week-section {
+        border-right: none;
+        border-bottom: 2px solid #999;
+    }
+
+    .progress-panel {
+        width: 100%;
+    }
+
+    .grid-cell {
+        min-height: 25px;
+        font-size: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .habit-item {
+        font-size: 11px;
+        padding: 8px;
+    }
+
+    .day-cell,
+    .percent-cell,
+    .weekday,
+    .date-num {
+        font-size: 10px;
+        padding: 4px 1px;
+    }
+
+    .progress-table-header,
+    .progress-row {
+        grid-template-columns: 40px 1fr 70px;
+        padding: 6px;
+        font-size: 10px;
+    }
+}
