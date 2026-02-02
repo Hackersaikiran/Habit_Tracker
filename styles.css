@@ -254,6 +254,7 @@ body {
     box-sizing: border-box;
     transition: all 0.2s ease;
     color: #333;
+    position: relative;
 }
 
 .habit-item:hover {
@@ -274,6 +275,85 @@ body {
     line-height: 24px;
     font-size: 11px;
     flex-shrink: 0;
+}
+
+.habit-name {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.delete-habit-btn {
+    background: none;
+    border: none;
+    color: #999;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 0 4px;
+    transition: color 0.2s ease;
+    flex-shrink: 0;
+    display: none;
+}
+
+.habit-item:hover .delete-habit-btn {
+    display: block;
+    color: #ff6b6b;
+}
+
+.delete-habit-btn:hover {
+    color: #ff4444;
+}
+
+/* Add habit section */
+.add-habit-section {
+    padding: 12px;
+    background-color: #f0f0ff;
+    border-top: 2px solid #ddd;
+    display: flex;
+    gap: 8px;
+}
+
+.new-habit-input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 12px;
+    color: #333;
+    background-color: white;
+}
+
+.new-habit-input:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.1);
+}
+
+.new-habit-input::placeholder {
+    color: #999;
+}
+
+.add-habit-btn {
+    padding: 8px 12px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 12px;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.add-habit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.add-habit-btn:active {
+    transform: translateY(0);
 }
 
 /* Calendar */

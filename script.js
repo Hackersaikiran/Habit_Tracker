@@ -2,8 +2,14 @@
 let currentMonth = 0; // January
 let currentYear = 2026;
 let habitData = {};
-const NUM_HABITS = 16;
+let habits = []; // Dynamic habit list
 const STORAGE_KEY = 'habitTrackerData';
+const HABITS_STORAGE_KEY = 'habitTrackerHabits';
+
+// Get number of habits dynamically
+function getNumHabits() {
+    return habits.length;
+}
 
 // Motivational Quotes
 const motivationalQuotes = [
@@ -63,6 +69,49 @@ function loadHabitData() {
     }
 }
 
+// Load habits list from localStorage
+function loadHabits() {
+    try {
+        const savedHabits = localStorage.getItem(HABITS_STORAGE_KEY);
+        if (savedHabits) {
+            habits = JSON.parse(savedHabits);
+        } else {
+            // Default habits if none exist
+            habits = [
+                'Wake up at 6AM',
+                'Drink Water (500ml)',
+                'Morning Exercise (30min)',
+                'Hanging 2min',
+                'Cold shower',
+                'Have Breakfast',
+                'Coding (3hrs)',
+                'Prayer (2hrs)',
+                'Have Lunch',
+                'Skipping rope (500)',
+                'Pushups / Situps (20)',
+                'Screen Time <90mins',
+                'Eat fruits and vegetables',
+                'Screen time before bed <10min',
+                'Tidy up space (5-10 minutes)',
+                'Drink water (3L)'
+            ];
+            saveHabits();
+        }
+    } catch (error) {
+        console.error('Error loading habits:', error);
+        habits = [];
+    }
+}
+
+// Save habits list to localStorage
+function saveHabits() {
+    try {
+        localStorage.setItem(HABITS_STORAGE_KEY, JSON.stringify(habits));
+    } catch (error) {
+        console.error('Error saving habits:', error);
+    }
+}
+
 // Save habit data to localStorage
 function saveHabitData() {
     try {
@@ -76,11 +125,12 @@ function saveHabitData() {
 function initializeHabitData(year, month) {
     const daysInMonth = new Date(year, month + 1, 0).getDate();
     const key = `${year}-${month}`;
+    const numHabits = getNumHabits();
     
     if (!habitData[key]) {
         habitData[key] = {};
         for (let day = 1; day <= daysInMonth; day++) {
-            habitData[key][day] = Array(NUM_HABITS).fill(0);
+            habitData[key][day] = Array(numHabits).fill(0);
         }
         saveHabitData();
     }
@@ -110,7 +160,7 @@ function calculateDailyPercentage(year, month, day) {
     
     const dayData = habitData[key][day];
     const completed = dayData.filter(val => val === 1).length;
-    const total = NUM_HABITS;
+    const total = getNumHabits();
     const percentage = Math.round((completed / total) * 100);
     
     return { percentage, isFuture: false };
@@ -321,8 +371,8 @@ function renderHabitCells(year, month) {
         habitGrid.innerHTML = '';
         habitGrid.style.gridTemplateColumns = `repeat(${actualDays.length}, 1fr)`;
         
-        // For each habit (16 rows)
-        for (let habitIdx = 0; habitIdx < NUM_HABITS; habitIdx++) {
+        // For each habit (dynamic rows based on habits list)
+        for (let habitIdx = 0; habitIdx < getNumHabits(); habitIdx++) {
             // For each actual day in the week (no nulls)
             for (let dayIdx = 0; dayIdx < actualDays.length; dayIdx++) {
                 const dayOfMonth = actualDays[dayIdx];
@@ -373,7 +423,7 @@ function updateProgressPanel(year, month) {
     const existingRows = progressTable.querySelectorAll('.progress-row');
     existingRows.forEach(row => row.remove());
     
-    for (let habit = 0; habit < NUM_HABITS; habit++) {
+    for (let habit = 0; habit < getNumHabits(); habit++) {
         const stats = calculateHabitStats(year, month, habit);
         
         const row = document.createElement('div');
@@ -413,13 +463,82 @@ function handleDateChange() {
     renderCalendar(currentYear, currentMonth);
 }
 
+// Render habits list in sidebar
+function renderHabitsList() {
+    const habitsList = document.getElementById('habitsList');
+    habitsList.innerHTML = '';
+    
+    habits.forEach((habit, index) => {
+        const habitItem = document.createElement('div');
+        habitItem.className = 'habit-item';
+        habitItem.innerHTML = `
+            <span class="habit-number">${index + 1}</span>
+            <span class="habit-name">${habit}</span>
+            <button class="delete-habit-btn" data-index="${index}" title="Delete habit">×</button>
+        `;
+        habitsList.appendChild(habitItem);
+        
+        // Add delete functionality
+        const deleteBtn = habitItem.querySelector('.delete-habit-btn');
+        deleteBtn.addEventListener('click', () => deleteHabit(index));
+    });
+}
+
+// Add new habit
+function addHabit(habitName) {
+    if (!habitName || habitName.trim() === '') {
+        alert('Please enter a habit name');
+        return;
+    }
+    
+    habits.push(habitName.trim());
+    saveHabits();
+    renderHabitsList();
+    
+    // Clear the input
+    document.getElementById('newHabitInput').value = '';
+    
+    // Re-render calendar with new habit count
+    renderCalendar(currentYear, currentMonth);
+}
+
+// Delete habit
+function deleteHabit(index) {
+    if (confirm(`Delete "${habits[index]}"? This will remove all data for this habit.`)) {
+        habits.splice(index, 1);
+        saveHabits();
+        renderHabitsList();
+        
+        // Re-render calendar with updated habit count
+        renderCalendar(currentYear, currentMonth);
+    }
+}
+
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', () => {
+    // Load saved habits
+    loadHabits();
+    
     // Load saved habit data from localStorage
     loadHabitData();
     
     // Display daily motivational quote (changes each visit)
     displayDailyQuote();
+    
+    // Render habits list
+    renderHabitsList();
+    
+    // Set up add habit button
+    document.getElementById('addHabitBtn').addEventListener('click', () => {
+        addHabit(document.getElementById('newHabitInput').value);
+    });
+    
+    // Allow Enter key to add habit
+    document.getElementById('newHabitInput').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            addHabit(document.getElementById('newHabitInput').value);
+        }
+    });
     
     // Set current month/year
     document.getElementById('monthSelect').value = currentMonth;
