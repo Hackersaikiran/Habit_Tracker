@@ -5,6 +5,8 @@ let habitData = {};
 let habits = []; // Dynamic habit list
 const STORAGE_KEY = 'habitTrackerData';
 const HABITS_STORAGE_KEY = 'habitTrackerHabits';
+const MONTH_STORAGE_KEY = 'habitTrackerMonth';
+const YEAR_STORAGE_KEY = 'habitTrackerYear';
 
 // Get number of habits dynamically
 function getNumHabits() {
@@ -100,6 +102,31 @@ function loadHabits() {
     } catch (error) {
         console.error('Error loading habits:', error);
         habits = [];
+    }
+}
+
+// Load month and year from localStorage
+function loadMonthAndYear() {
+    try {
+        const savedMonth = localStorage.getItem(MONTH_STORAGE_KEY);
+        const savedYear = localStorage.getItem(YEAR_STORAGE_KEY);
+        
+        if (savedMonth !== null && savedYear !== null) {
+            currentMonth = parseInt(savedMonth);
+            currentYear = parseInt(savedYear);
+        }
+    } catch (error) {
+        console.error('Error loading month/year:', error);
+    }
+}
+
+// Save month and year to localStorage
+function saveMonthAndYear() {
+    try {
+        localStorage.setItem(MONTH_STORAGE_KEY, currentMonth);
+        localStorage.setItem(YEAR_STORAGE_KEY, currentYear);
+    } catch (error) {
+        console.error('Error saving month/year:', error);
     }
 }
 
@@ -455,11 +482,11 @@ function renderCalendar(year, month) {
     renderWeeks(year, month);
     updateProgressPanel(year, month);
 }
-
 // Handle month/year change
 function handleDateChange() {
     currentMonth = parseInt(document.getElementById('monthSelect').value);
     currentYear = parseInt(document.getElementById('yearSelect').value);
+    saveMonthAndYear();
     renderCalendar(currentYear, currentMonth);
 }
 
@@ -635,6 +662,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Load saved habit data from localStorage
     loadHabitData();
     
+    // Load saved month and year
+    loadMonthAndYear();
+    
     // Display daily motivational quote (changes each visit)
     displayDailyQuote();
     
@@ -653,7 +683,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     
-    // Set current month/year
+    // Set current month/year in dropdowns
     document.getElementById('monthSelect').value = currentMonth;
     document.getElementById('yearSelect').value = currentYear;
     
@@ -661,6 +691,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('monthSelect').addEventListener('change', handleDateChange);
     document.getElementById('yearSelect').addEventListener('change', handleDateChange);
     
-    // Render initial calendar (with saved data)
+    // Render initial calendar (with saved data and month/year)
     renderCalendar(currentYear, currentMonth);
 });
