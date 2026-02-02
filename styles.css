@@ -255,12 +255,42 @@ body {
     transition: all 0.2s ease;
     color: #333;
     position: relative;
+    cursor: grab;
+}
+
+.habit-item:active {
+    cursor: grabbing;
+}
+
+.habit-item.dragging {
+    opacity: 0.5;
+    background-color: #f0f0ff;
+}
+
+.habit-item.drag-over {
+    background-color: #e8d5ff;
+    border-top: 2px solid #667eea;
+    padding-top: 2px;
+    margin-top: 2px;
 }
 
 .habit-item:hover {
     background-color: #f0f0ff;
     border-left: 3px solid #667eea;
     padding-left: 9px;
+}
+
+.habit-drag-handle {
+    color: #ccc;
+    font-size: 10px;
+    letter-spacing: -2px;
+    flex-shrink: 0;
+    cursor: grab;
+    user-select: none;
+}
+
+.habit-item:active .habit-drag-handle {
+    cursor: grabbing;
 }
 
 .habit-number {
@@ -282,27 +312,74 @@ body {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    cursor: pointer;
+    position: relative;
 }
 
+.habit-name:hover {
+    text-decoration: underline;
+    text-decoration-color: #667eea;
+}
+
+.habit-actions {
+    display: none;
+    gap: 4px;
+    flex-shrink: 0;
+}
+
+.habit-item:hover .habit-actions {
+    display: flex;
+}
+
+.edit-habit-btn,
+.move-up-btn,
+.move-down-btn,
 .delete-habit-btn {
     background: none;
     border: none;
-    color: #999;
-    font-size: 20px;
     cursor: pointer;
-    padding: 0 4px;
-    transition: color 0.2s ease;
+    padding: 2px 4px;
+    transition: all 0.2s ease;
+    font-size: 14px;
     flex-shrink: 0;
-    display: none;
 }
 
-.habit-item:hover .delete-habit-btn {
-    display: block;
-    color: #ff6b6b;
+.edit-habit-btn {
+    color: #667eea;
+}
+
+.edit-habit-btn:hover {
+    color: #764ba2;
+    transform: scale(1.1);
+}
+
+.move-up-btn,
+.move-down-btn {
+    color: #666;
+    font-size: 12px;
+}
+
+.move-up-btn:hover,
+.move-down-btn:hover {
+    color: #667eea;
+    transform: scale(1.15);
+}
+
+.move-up-btn:disabled,
+.move-down-btn:disabled {
+    color: #ddd;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.delete-habit-btn {
+    color: #999;
+    font-size: 18px;
 }
 
 .delete-habit-btn:hover {
     color: #ff4444;
+    transform: scale(1.2);
 }
 
 /* Add habit section */

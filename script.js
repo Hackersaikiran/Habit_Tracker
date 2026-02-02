@@ -471,17 +471,130 @@ function renderHabitsList() {
     habits.forEach((habit, index) => {
         const habitItem = document.createElement('div');
         habitItem.className = 'habit-item';
+        habitItem.draggable = true;
+        habitItem.dataset.index = index;
+        
         habitItem.innerHTML = `
+            <div class="habit-drag-handle">⋮⋮</div>
             <span class="habit-number">${index + 1}</span>
-            <span class="habit-name">${habit}</span>
-            <button class="delete-habit-btn" data-index="${index}" title="Delete habit">×</button>
+            <span class="habit-name" data-index="${index}">${escapeHtml(habit)}</span>
+            <div class="habit-actions">
+                <button class="edit-habit-btn" data-index="${index}" title="Edit habit">✏️</button>
+                <button class="move-up-btn" data-index="${index}" title="Move up" ${index === 0 ? 'disabled' : ''}>↑</button>
+                <button class="move-down-btn" data-index="${index}" title="Move down" ${index === habits.length - 1 ? 'disabled' : ''}>↓</button>
+                <button class="delete-habit-btn" data-index="${index}" title="Delete habit">×</button>
+            </div>
         `;
         habitsList.appendChild(habitItem);
         
-        // Add delete functionality
+        // Drag and drop
+        habitItem.addEventListener('dragstart', (e) => {
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/html', habitItem.innerHTML);
+            habitItem.classList.add('dragging');
+        });
+        
+        habitItem.addEventListener('dragend', () => {
+            habitItem.classList.remove('dragging');
+        });
+        
+        habitItem.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+            if (habitItem !== document.querySelector('.habit-item.dragging')) {
+                habitItem.classList.add('drag-over');
+            }
+        });
+        
+        habitItem.addEventListener('dragleave', () => {
+            habitItem.classList.remove('drag-over');
+        });
+        
+        habitItem.addEventListener('drop', (e) => {
+            e.preventDefault();
+            habitItem.classList.remove('drag-over');
+            
+            const draggingItem = document.querySelector('.habit-item.dragging');
+            if (draggingItem && draggingItem !== habitItem) {
+                const fromIndex = parseInt(draggingItem.dataset.index);
+                const toIndex = parseInt(habitItem.dataset.index);
+                moveHabitByDrag(fromIndex, toIndex);
+            }
+        });
+        
+        // Edit button
+        const editBtn = habitItem.querySelector('.edit-habit-btn');
+        editBtn.addEventListener('click', () => editHabit(index));
+        
+        // Move up button
+        const moveUpBtn = habitItem.querySelector('.move-up-btn');
+        if (moveUpBtn && !moveUpBtn.disabled) {
+            moveUpBtn.addEventListener('click', () => moveHabitUp(index));
+        }
+        
+        // Move down button
+        const moveDownBtn = habitItem.querySelector('.move-down-btn');
+        if (moveDownBtn && !moveDownBtn.disabled) {
+            moveDownBtn.addEventListener('click', () => moveHabitDown(index));
+        }
+        
+        // Delete button
         const deleteBtn = habitItem.querySelector('.delete-habit-btn');
         deleteBtn.addEventListener('click', () => deleteHabit(index));
     });
+}
+
+// Escape HTML to prevent injection
+function escapeHtml(text) {
+    const map = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#039;'
+    };
+    return text.replace(/[&<>"']/g, m => map[m]);
+}
+
+// Edit habit
+function editHabit(index) {
+    const currentHabit = habits[index];
+    const newName = prompt(`Edit habit:\n\n(Current: ${currentHabit})`, currentHabit);
+    
+    if (newName !== null && newName.trim() !== '') {
+        habits[index] = newName.trim();
+        saveHabits();
+        renderHabitsList();
+    }
+}
+
+// Move habit up
+function moveHabitUp(index) {
+    if (index > 0) {
+        [habits[index - 1], habits[index]] = [habits[index], habits[index - 1]];
+        saveHabits();
+        renderHabitsList();
+        renderCalendar(currentYear, currentMonth);
+    }
+}
+
+// Move habit down
+function moveHabitDown(index) {
+    if (index < habits.length - 1) {
+        [habits[index], habits[index + 1]] = [habits[index + 1], habits[index]];
+        saveHabits();
+        renderHabitsList();
+        renderCalendar(currentYear, currentMonth);
+    }
+}
+
+// Move habit by drag
+function moveHabitByDrag(fromIndex, toIndex) {
+    const [moved] = habits.splice(fromIndex, 1);
+    habits.splice(toIndex, 0, moved);
+    saveHabits();
+    renderHabitsList();
+    renderCalendar(currentYear, currentMonth);
 }
 
 // Add new habit
