@@ -27,26 +27,13 @@
             <!-- Sidebar with Daily Habits -->
             <aside class="sidebar">
                 <div class="sidebar-header">DAILY HABITS</div>
-                <div class="sidebar-subheader">HABITS</div>
+                <div class="sidebar-subheader">HABITS (Click to edit, drag to reorder)</div>
                 <div class="sidebar-spacer weekday-spacer"></div>
                 <div class="sidebar-spacer date-spacer"></div>
-                <div class="habits-list">
-                    <div class="habit-item"><span class="habit-number">1</span> Wake up at 6AM </div>
-                    <div class="habit-item"><span class="habit-number">2</span> Drink Water(500ml) </div>
-                    <div class="habit-item"><span class="habit-number">3</span> Shopping (once 500) </div>
-                    <div class="habit-item"><span class="habit-number">4</span> Hanging 2min </div>
-                    <div class="habit-item"><span class="habit-number">5</span> Cold shower </div>
-                    <div class="habit-item"><span class="habit-number">6</span> Have Breakfast </div>
-                    <div class="habit-item"><span class="habit-number">7</span> Coding (3hrs) </div>
-                    <div class="habit-item"><span class="habit-number">8</span> Prayer (2hrs) </div>
-                    <div class="habit-item"><span class="habit-number">9</span> Have Lunch </div>
-                    <div class="habit-item"><span class="habit-number">10</span> Skipping rope (500) </div>
-                    <div class="habit-item"><span class="habit-number">11</span> Pushups / Situps (20) </div>
-                    <div class="habit-item"><span class="habit-number">12</span> Screen Time <90mins </div>
-                    <div class="habit-item"><span class="habit-number">13</span> Eat fruits and vegetables daily </div>
-                    <div class="habit-item"><span class="habit-number">14</span> Screen time before bed <10min </div>
-                    <div class="habit-item"><span class="habit-number">15</span> Tidy up your space for 5-10 minutes </div>
-                    <div class="habit-item"><span class="habit-number">16</span> Drinking water (3L) </div>
+                <div class="habits-list" id="habitsList" draggable="false"></div>
+                <div class="add-habit-section">
+                    <input type="text" id="newHabitInput" placeholder="Add new habit..." class="new-habit-input">
+                    <button id="addHabitBtn" class="add-habit-btn">+ ADD</button>
                 </div>
             </aside>
 
