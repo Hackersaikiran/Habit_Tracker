@@ -4,18 +4,22 @@ A responsive, interactive web-based habit tracking application that helps you mo
 
 ## 📸 Preview
 
-![Habit Tracker Dashboard](requriement/Screenshot%202026-01-30%20104944.png)
+![Habit Tracker Dashboard](requriement/Screenshot%202026-02-02%20204907.png)
 
 ## ✨ Features
 
 - **📅 Dynamic Calendar View** - Switch between different months and years seamlessly
-- **16 Daily Habits** - Track up to 16 different habits simultaneously
+- **✏️ Customizable Habits** - Add, edit, delete, and reorder your own habits based on priority
+- **📊 Priority Ordering** - Drag-and-drop to reorder habits or use up/down buttons
 - **✅ Interactive Grid** - Click any day to mark habits as completed or missed
+- **💾 Data Persistence** - All data, habits, and settings saved to localStorage
+- **💬 Motivational Quotes** - New inspirational quote on every page visit
 - **📊 Progress Analytics** - View daily completion percentages and overall habit statistics
-- **📈 Visual Feedback** - Striped pattern for completed habits, "0" indicator for missed days
+- **📈 Visual Feedback** - Color-coded cells for completed habits, indicators for missed days
 - **🎯 Goal Tracking** - Monitor completion goals and percentage achievements
 - **📱 Responsive Design** - Consistent layout across different screen sizes
 - **⚡ Real-time Updates** - Instant calculation of statistics when habits are toggled
+- **🔄 Session Memory** - Your selected month/year persists across page refreshes
 
 ## 🛠️ Technologies Used
 
@@ -51,76 +55,95 @@ Habit_Tracker/
 
 ### Usage
 
-1. **Select Month & Year**
+1. **Manage Your Habits**
+   - **Add Habit** - Type in the input field and click "+ ADD" or press Enter
+   - **Edit Habit** - Click on any habit name to edit it
+   - **Delete Habit** - Hover and click the × button to remove (with confirmation)
+   - **Reorder Habits** - Drag habits by the handle (⋮⋮) or use ↑/↓ buttons to set priority
+
+2. **Select Month & Year**
    - Use the dropdown selectors on the right side to choose a month and year
-   - Calendar updates automatically
+   - Your selection is saved and persists across page refreshes
 
-2. **Track Habits**
+3. **Track Habits**
    - Click any cell in the grid to toggle between:
-     - ✅ **Completed** (striped green pattern)
+     - ✅ **Completed** (purple/blue striped pattern)
      - ❌ **Missed** (white background with "0")
+   - Changes are automatically saved to localStorage
 
-3. **View Statistics**
+4. **View Statistics**
    - **Daily Progress** - Completion percentage for each day (top section)
    - **Progress Panel** - Habit statistics with:
      - **Goal** - Total days available
      - **Percentage** - Completion percentage with visual bar
      - **Count** - Completed vs Total days
 
-4. **Month Navigation**
-   - Supports years 2024-2028
-   - All 12 months available for selection
+5. **Daily Motivation**
+   - A new motivational quote appears every time you refresh the page
+   - Perfect for daily inspiration!
 
 ## 📊 Dashboard Components
 
-### Left Sidebar - Daily Habits
-Lists all 16 trackable habits:
-1. Wake up at 6AM
-2. Drink Water (500ml)
-3. Shopping (once 500)
-4. Hanging 2min
-5. Cold shower
-6. Have Breakfast
-7. Coding (3hrs)
-8. Prayer (2hrs)
-9. Have Lunch
-10. Skipping rope (500)
-11. Pushups / Situps (20)
-12. Screen Time <90mins
-13. Eat fruits and vegetables daily
-14. Screen time before bed <10min
-15. Tidy up your space for 5-10 minutes
-16. Drinking water (3L)
+### Left Sidebar - Daily Habits (Customizable)
+- Displays all your custom habits in numbered list
+- **Drag Handle** (⋮⋮) - Drag to reorder by priority
+- **✏️ Edit Button** - Click to edit habit name
+- **↑/↓ Buttons** - Move habits up or down by priority
+- **× Button** - Delete habit (shown on hover)
+- **+ ADD Section** - Add new habits with input field
 
 ### Center - Calendar Grid
 - **Week Sections** - Organized by weeks with clear labels
 - **Date Numbers** - Shows calendar days 1-31
+- **Day Letters** - S, M, T, W, T, F, S (adjusts for month start day)
 - **Habit Cells** - Interactive cells for each habit-day combination
 - **Daily Stats** - Completion percentage for each day
+- **Progress Charts** - Visual bar graph at top showing daily percentages
 
 ### Right Sidebar - Progress Panel
-- **Month/Year Selectors** - Control calendar display
+- **Month/Year Selectors** - Control calendar display (saves selection)
 - **Habit Progress Rows** - Shows:
   - Days in month (GOAL)
-  - Completion percentage
+  - Completion percentage with visual bar
   - Count of completed days
 
+### Header
+- **Logo** - "HABIT Tracker" branding
+- **Motivational Quote** - Changes on every page load
+- **Daily Progress** - Widget showing current progress
+
 ## 🔧 Key Features Explained
+
+### Customizable Habits System
+- Add unlimited habits (not limited to 16)
+- Edit existing habit names anytime
+- Delete habits with confirmation
+- Reorder by priority (drag or use buttons)
+- All changes saved to localStorage
+
+### Data Persistence with localStorage
+- Habit definitions saved and restored
+- Progress data persists across sessions
+- Selected month/year remembered
+- All data stored locally in browser (no server needed)
 
 ### Dynamic Calendar Rendering
 - Automatically calculates days in each month
 - Handles different month lengths (28-31 days)
 - Supports leap years correctly
-
-### Habit Data Persistence
-- Data is stored in browser memory during session
-- Organized by month and year for easy navigation
-- 16 habits × 31 days maximum storage per month
+- Adapts to start day of month (no empty columns)
 
 ### Progress Calculation
 - Real-time percentage calculation
 - Visual progress bars for quick assessment
 - Automatic updates when habits are toggled
+- Daily percentages calculated instantly
+
+### Drag & Drop Reordering
+- Click and drag habit by the drag handle
+- Visual feedback during drag (opacity change)
+- Drop target highlights with blue line
+- Alternative: Use ↑/↓ buttons for ordering
 
 ## 📝 Branches
 
@@ -133,10 +156,13 @@ Lists all 16 trackable habits:
 **Current Version:** 1.0.0
 
 ### Latest Changes
-- Clean initial state on application load
-- Fixed clickable cells for all valid calendar dates
-- Dynamic month/year selection functionality
-- Responsive layout with CSS variables
+- ✅ Implemented customizable habits (add, edit, delete)
+- ✅ Added drag-and-drop reordering with priority buttons
+- ✅ Implemented localStorage persistence for all data
+- ✅ Added motivational quotes that change on each visit
+- ✅ Fixed month/year navigation persistence
+- ✅ Removed empty calendar columns for cleaner UI
+- ✅ Enhanced UI with modern glassmorphism design
 
 ## 📄 License
 
@@ -160,16 +186,17 @@ Feel free to fork this repository and submit pull requests with improvements!
 
 ## 🎯 Future Enhancements
 
-- [ ] Local storage persistence
-- [ ] Export/Import data functionality
-- [ ] Custom habit creation
-- [ ] Habit categories
-- [ ] Statistics dashboard
+- [ ] Export/Import data as CSV or JSON
+- [ ] Habit categories and color coding
+- [ ] Statistics dashboard with trends
 - [ ] Mobile app version
 - [ ] Dark mode theme
+- [ ] Habit reminders and notifications
+- [ ] Social sharing features
+- [ ] Multi-user support
 
 ---
 
-**Last Updated:** January 30, 2026
+**Last Updated:** February 2, 2026
 
 For more information or issues, please visit the [GitHub repository](https://github.com/Hackersaikiran/Habit_Tracker)
